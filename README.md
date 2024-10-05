@@ -1,1 +1,5 @@
-# Proyek-Analisis-Data
+streamlit
+pandas
+numpy
+matplotlib
+seaborn
