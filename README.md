@@ -1,5 +1,1 @@
-streamlit
-pandas
-numpy
-matplotlib
-seaborn
+streamlit run dashboard.py
