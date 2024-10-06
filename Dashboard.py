@@ -36,27 +36,32 @@ plt.xticks(ticks=data_bulan.index, labels=["Jan", "Feb", "Mar", "Apr", "May", "J
 plt.grid(True)
 st.pyplot(plt)
 
-st.header("Penyewaan Berdasarkan Musim")
-season_labels = {1: 'Musim Semi', 2: 'Musim Panas', 3: 'Musim Gugur', 4: 'Musim Dingin'}
-data_musim = filtered_data.groupby('season')['cnt'].mean().reset_index()
-data_musim['season'] = data_musim['season'].map(season_labels)
+st.header("Kondisi Musim Berdampak terhadap Jumlah Sewa Sepeda")
+data_musim = filtered_data.groupby(by='season').agg({
+    'cnt': 'mean'
+})
 
-colors = ['#FFA07A', '#20B2AA', '#87CEFA', '#778899']
-data_musim.plot(kind='bar', x='season', y='cnt', color=colors, legend=False)
-plt.title('Penyewaan Berdasarkan Musim')
+label_season = {1: 'Musim Semi', 2: 'Musim Panas', 3: 'Musim Gugur', 4: 'Musim Dingin'}
+data_musim.index = data_musim.index.map(label_season)
+
+colors = ['#1E90FF', '#4682B4', '#00008B', '#ADD8E6']
+
+data_musim.plot(kind='bar', title='Kondisi Musim Berdampak terhadap Jumlah Sewa Sepeda', color=colors, legend=False)
 plt.ylabel('Jumlah Penyewaan Rata-rata')
 plt.xlabel('Musim')
 st.pyplot(plt)
 
 st.header("Penyewaan Berdasarkan Kondisi Cuaca")
-weather_labels = {1: 'Cerah', 2: 'Berkabut', 3: 'Salju Ringan'}
-filtered_data['weathersit'] = filtered_data['weathersit'].map(weather_labels)
+data_cuaca = filtered_data.groupby(by='weathersit').agg({
+    'cnt': 'mean'
+})
 
-data_cuaca = filtered_data.groupby('weathersit')['cnt'].mean().reset_index()
+label_weathersit = {1: 'Cerah', 2: 'Berkabut', 3: 'Salju Ringan'}
+data_cuaca.index = data_cuaca.index.map(label_weathersit)
+
 colors = ['#1E90FF', '#4682B4', '#00008B']
 
-data_cuaca.plot(kind='bar', x='weathersit', y='cnt', color=colors, legend=False)
-plt.title('Kondisi Cuaca Berdampak terhadap Jumlah Sewa Sepeda')
+data_cuaca.plot(kind='bar', title='Kondisi Cuaca Berdampak terhadap Jumlah Sewa Sepeda', color=colors, legend=False)
 plt.ylabel('Jumlah Penyewaan Rata-rata')
 plt.xlabel('Cuaca')
 st.pyplot(plt)
