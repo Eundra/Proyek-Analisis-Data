@@ -11,6 +11,8 @@ def load_data():
 
 data = load_data()
 
+st.title("Dashboard Analisis Penyewaan Sepeda")
+
 st.sidebar.header("Pengaturan Tanggal")
 start_date = st.sidebar.date_input("Tanggal Mulai", value=pd.to_datetime('2011-01-01'))
 end_date = st.sidebar.date_input("Tanggal Akhir", value=pd.to_datetime('2012-12-31'))
